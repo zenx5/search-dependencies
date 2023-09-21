@@ -40,15 +40,18 @@ export default function Form({
     return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-10 p-24">
       <form className="w-1/2 flex flex-row" action={search}>
-        <span className="w-4/12 border-r">
-          <input type="text" className="py-2 px-4 m-0 w-full h-full" placeholder="Usario" name="user" defaultValue={user ?? ""}/>
-          <small className="italic ml-5 text-slate-500">Usuario de githbu</small>
+        <span className="w-4/12 h-fit border-r group">
+          <input type="text" className="py-2 px-4 m-0 w-full h-full rounded-l-xl shadow-lg outline-none focus:bg-green-100 focus:font-semibold" placeholder="Usario" name="user" defaultValue={user ?? ""}/>
+          <small className="italic text-slate-500 group-hover:text-slate-900 text-center block w-full mt-1">Usuario de githbu</small>
         </span>
-        <span className="w-4/12 border-r">
-          <input type="text" className="py-2 px-4 m-0 w-full h-full" placeholder="Dependencia" name="dependencie" defaultValue={dependencie ?? ""}/>
-          <small className="italic ml-5 text-slate-500">Dependencia que desea buscar</small>
+        <span className="w-4/12 h-fit border-r group">
+          <input type="text" className="py-2 px-4 m-0 w-full h-full shadow-lg outline-none focus:bg-green-100 focus:font-semibold" placeholder="Dependencia" name="dependencie" defaultValue={dependencie ?? ""}/>
+          <small className="italic text-slate-500 group-hover:text-slate-900 text-center block w-full mt-1">Dependencia que desea buscar</small>
         </span>
-        <button className="w-2/12 bg-green-500 text-white">Buscar</button>
+        <span className="w-4/12 h-fit">
+          <input type="submit" className="py-2 px-4 m-0 w-full h-full rounded-r-xl font-semibold shadow-lg bg-green-500 text-white text-sm cursor-pointer active:bg-green-300" value="Buscar"/>
+          <small className="text-transparent">no</small>
+        </span>
       </form>
       <div className="">
         {children}
