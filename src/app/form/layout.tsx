@@ -1,6 +1,10 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
+interface ErrorMessage{
+  message:string
+}
+
 export default function Form({
     children,
   }: {
@@ -10,18 +14,26 @@ export default function Form({
     const user = cookies().get(process.env.COOKIE_NAME_USER as string)?.value
     async function search(data:FormData) {
         "use server";
-        const response = await fetch( process.env.LOCALHOST + "/api/search", {
-        method:'post',
-        body:JSON.stringify({
-            user:data.get("user"),
-            dep: data.get("dependencie")
-        })
-        })
-        const result = await response.json()
+        let message = "No hay resultados"
+        let result = []
+        try{
+          const response = await fetch( `${process.env.LOCALHOST}/api/search`, {
+            method:'post',
+            body:JSON.stringify({
+                user:data.get("user"),
+                dep: data.get("dependencie")
+            })
+          })
+          result = await response.json()
+          if( result.length>0 ) message = ""
+        }catch(error:any) {
+          result = []
+          message = error.message
+        }
         cookies().set(process.env.COOKIE_NAME_USER as string, data.get("user") as string)
         cookies().set(process.env.COOKIE_NAME_TARGET as string, data.get("dependencie") as string)
         cookies().set(process.env.COOKIE_NAME_RESULT as string, JSON.stringify(result))
-        redirect("/form")
+        redirect("/form/" + message)
     }
 
 
