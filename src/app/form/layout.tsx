@@ -9,7 +9,7 @@ export default function Form({
     const dependencie = cookies().get(process.env.COOKIE_NAME_TARGET as string)?.value
     async function search(data:FormData) {
         "use server";
-        const response = await fetch("http://localhost:3000/api/search", {
+        const response = await fetch( process.env.LOCALHOST + "/api/search", {
         method:'post',
         body:JSON.stringify({
             user:"zenx5",
