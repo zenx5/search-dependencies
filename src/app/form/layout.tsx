@@ -49,7 +49,7 @@ export default function Form({
           <small className="italic text-slate-500 group-hover:text-slate-900 text-center block w-full mt-1">Dependencia que desea buscar</small>
         </span>
         <span className="w-4/12 h-fit">
-          <input type="submit" className="py-2 px-4 m-0 w-full h-full rounded-r-xl font-semibold shadow-lg bg-green-500 text-white text-sm cursor-pointer active:bg-green-300" value="Buscar"/>
+          <input type="submit" className="py-2 px-4 m-0 w-full h-full rounded-r-xl font-semibold shadow-lg bg-green-500 text-white text-sm cursor-pointer active:bg-green-300 hover:bg-green-400" value="Buscar"/>
           <small className="text-transparent">no</small>
         </span>
       </form>
