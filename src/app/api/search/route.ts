@@ -11,7 +11,7 @@ const NOT_FOUND = -1
 export async function POST(request:NextRequest) {
     const { user, dep } = await request.json()
 
-    const response = await fetch(`https://api.github.com/users/${user}/repos`)
+    const response = await fetch(`${process.env.LOCALHOST}/api/github/repos/${user}`)
     const data = await response.json()
     const packages = data.map( ({name, default_branch, html_url}:responseRepositorie) => ({
         package: `https://raw.githubusercontent.com/${user}/${name}/${default_branch}/package.json`,
