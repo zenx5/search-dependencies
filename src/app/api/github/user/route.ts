@@ -10,5 +10,7 @@ export async function GET() {
         headers
     })
 
-    NextResponse.json( await response.json() )
+    const data = await response.json()
+
+    return NextResponse.json( data )
 }
