@@ -1,4 +1,8 @@
+import { PrismaClient } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
+import { cookies } from "next/headers"
+
+const prisma = new PrismaClient()
 
 export async function GET(request:NextRequest, { params }:{ params: { code:string }} ){
     const { code } = params
@@ -12,11 +16,82 @@ export async function GET(request:NextRequest, { params }:{ params: { code:strin
     const headers = new Headers()
     headers.set("Accept", "application/json")
 
-    // return NextResponse.json( queryString  )
-
     const response = await fetch(`https://github.com/login/oauth/access_token?${queryString}`, {
-        headers
+      headers,
+      cache:'no-cache'
     })
-    return NextResponse.json( await response.json()  )
+    const {
+      error,
+      error_description,
+      access_token,
+      refresh_token
+    } = await response.json()
+
+    if( error ) {
+      return NextResponse.json({
+        error:true,
+        message: error_description,
+        data:null
+      })
+    }
+    headers.set("Content-Type", `application/json`)
+    headers.set("Authorization", `Bearer ${access_token}`)
+
+    const responseOne = await fetch("https://api.github.com/user", {
+        headers,
+        cache:'no-cache'
+    })
+    const {
+      login,
+      email,
+      name,
+      avatar_url,
+    } = await responseOne.json()
+    const responseTwo = await fetch( `${process.env.LOCALHOST}/api/user/${login}?github`, {
+      cache: 'no-cache'
+    })
+    const { error:notIsUser, data } = await responseTwo.json()
+
+    if( notIsUser ) {
+      // crear usuario
+      try{
+        const user = await prisma.user.create({
+          data:{
+            email: email,
+            username: login,
+            firstname: name.split(" ")?.at(0),
+            lastname: name.split(" ")?.at(1) ?? "",
+            avatarUrl: avatar_url,
+            password: "",
+            githubuser: login,
+            requestLimit: 10,
+            updateLimit: (new Date()).toISOString()
+          }
+        })
+        await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( user ) )
+        return NextResponse.json({
+          error: false,
+          message: "Success: User Created",
+          data:user
+        })
+      } catch( error:any ) {
+        console.log(error.message)
+        return NextResponse.json({
+          error: true,
+          message: error.message,
+          data:null
+        })
+      }
+    }
+    // logear usuario
+    console.log(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
+    await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
+    return NextResponse.json({
+      error: false,
+      message: "Success: User Logged",
+      data
+    })
+
+
 
 }
