@@ -11,17 +11,20 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  username  String
-  firstname String
-  lastname  String
-  password  String
-  limit     Int
-  Logs      Logs[]
-  Request   Request[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  username      String    @unique
+  firstname     String
+  lastname      String
+  avatarUrl     String
+  password      String
+  githubuser    String    @unique
+  requestLimit  Int
+  updateLimit   DateTime
+  Logs          Logs[]
+  Request       Request[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Logs {
