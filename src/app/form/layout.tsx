@@ -11,7 +11,7 @@ export default function Form({
     children: React.ReactNode
 }) {
     const dependencie = cookies().get(process.env.COOKIE_NAME_TARGET as string)?.value
-    const user = cookies().get(process.env.COOKIE_NAME_USER as string)?.value
+    const user = cookies().get(process.env.COOKIE_NAME_USER_QUERY as string)?.value
     async function search(data:FormData) {
         "use server";
         let message = "No hay resultados"
@@ -30,7 +30,7 @@ export default function Form({
           result = []
           message = error.message
         }
-        cookies().set(process.env.COOKIE_NAME_USER as string, data.get("user") as string)
+        cookies().set(process.env.COOKIE_NAME_USER_QUERY as string, data.get("user") as string)
         cookies().set(process.env.COOKIE_NAME_TARGET as string, data.get("dependencie") as string)
         cookies().set(process.env.COOKIE_NAME_RESULT as string, JSON.stringify(result))
         redirect("/form/" + message)
