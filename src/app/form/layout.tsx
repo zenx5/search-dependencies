@@ -1,5 +1,6 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import ButtonLoad from "./ButtonLoad"
 
 interface ErrorMessage{
   message:string
@@ -48,10 +49,7 @@ export default function Form({
           <input type="text" className="py-2 px-4 m-0 w-full h-full shadow-lg outline-none focus:bg-green-100 focus:font-semibold" placeholder="Dependencia" name="dependencie" defaultValue={dependencie ?? ""}/>
           <small className="italic text-slate-500 group-hover:text-slate-900 text-center block w-full mt-1">Dependencia que desea buscar</small>
         </span>
-        <span className="w-4/12 h-fit">
-          <input type="submit" className="py-2 px-4 m-0 w-full h-full rounded-r-xl font-semibold shadow-lg bg-green-500 text-white text-sm cursor-pointer active:bg-green-300 hover:bg-green-400" value="Buscar"/>
-          <small className="text-transparent">no</small>
-        </span>
+        <ButtonLoad />
       </form>
       <div className="">
         {children}
