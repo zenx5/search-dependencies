@@ -25,7 +25,8 @@ export default function ButtonLoad() {
     return <span className="w-4/12 h-fit">
         <button
             type="submit"
-            className="py-2 px-4 m-0 w-full h-full rounded-r-xl font-semibold shadow-lg bg-green-500 text-white text-sm cursor-pointer active:bg-green-300 hover:bg-green-400"
+            className="py-2 px-4 m-0 w-full h-full rounded-r-xl font-semibold shadow-lg bg-green-500 text-white text-sm cursor-pointer active:bg-green-300 hover:bg-green-400 disabled:bg-slate-600"
+            disabled={pending}
         >
             {
             pending ?
