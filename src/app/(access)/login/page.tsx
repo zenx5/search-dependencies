@@ -63,7 +63,7 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <ButtonGithub></ButtonGithub>
+                <ButtonGithub label="Iniciar sesión con GitHub"></ButtonGithub>
               </div>
 
               <div>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+import ButtonGithub from "@/components/ButtonGithub";
 import KavavSvg from "@/components/KavavSvg";
 
 export default function RegisterPage() {
@@ -105,6 +107,16 @@ export default function RegisterPage() {
                 Registrarse
               </button>
             </div>
+              <div>
+                <ButtonGithub label="Registrate con login"></ButtonGithub>
+              </div>
+
+              <div>
+                <Link
+                  href="/login"
+                  className="flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >Hacer login</Link>
+              </div>
           </form>
 
         </div>
