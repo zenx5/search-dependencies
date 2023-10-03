@@ -1,3 +1,5 @@
+import Link from "next/link";
+import ButtonGithub from "@/components/ButtonGithub";
 import KavavSvg from "@/components/KavavSvg";
 
 export default function LoginPage() {
@@ -61,13 +63,16 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-red-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                <ButtonGithub label="Iniciar sesión con GitHub"></ButtonGithub>
+              </div>
+
+              <div>
+                <Link
+                  href="/register"
+                  className="flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Registrarse
-                </button>
-
+                </Link>
               </div>
             </form>
           </div>
