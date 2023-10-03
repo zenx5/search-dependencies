@@ -1,4 +1,5 @@
 import ButtonGithub from "@/components/ButtonGithub";
+import Link from "next/link";
 
 export default function LoginPage() {
 
@@ -71,19 +72,15 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <button
-                  type="submit"
+                <Link
+                  href="/register"
                   className="flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Registrarse
-                </button>
+                </Link>
               </div>
-
-              
             </form>
-  
           </div>
         </div>
       )
   }
-  
