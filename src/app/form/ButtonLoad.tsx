@@ -22,10 +22,10 @@ export default function ButtonLoad() {
 
     },[pending])
 
-    return <span className="w-4/12 h-fit">
+    return <span className="w-full md:w-4/12 lg:w-64 h-fit">
         <button
             type="submit"
-            className="py-2 px-4 m-0 w-full h-full rounded-r-xl font-semibold shadow-lg bg-green-500 text-white text-sm cursor-pointer active:bg-green-300 hover:bg-green-400 disabled:bg-slate-600"
+            className="py-2 px-4 m-0 w-full h-full sm:rounded-xl md:rounded-r-xl md:rounded-l-none font-semibold shadow-lg bg-green-500 text-white text-sm cursor-pointer active:bg-green-300 hover:bg-green-400 disabled:bg-slate-600"
             disabled={pending}
         >
             {
