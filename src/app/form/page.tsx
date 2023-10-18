@@ -12,8 +12,6 @@ export default async function FormPage() {
     const hasResult = CookieResult!==undefined
     const result = hasResult ? JSON.parse( CookieResult ) : []
 
-    
-
     return <div className="flex flex-col gap-1">
         <ListRepo items={result} />
     </div>
