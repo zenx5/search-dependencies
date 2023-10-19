@@ -98,10 +98,12 @@ export async function POST( request:NextRequest) {
         const url = new URL(ROUTER_PATH.LOGIN, request.url)
         return NextResponse.redirect( url, { status:303 })
     }
-
+    return NextResponse.json({
+        message:'working'
+    })
 }
 
-export async function GET() {
+export async function GET() : Promise<any> {
     const user = await prisma.user.findMany()
     return NextResponse.json(user)
 }
