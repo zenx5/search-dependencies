@@ -1,6 +1,7 @@
-import Link from "next/link";
+import Link from "next/link";"login"
 import ButtonGithub from "@/components/ButtonGithub";
 import KavavSvg from "@/components/KavavSvg";
+import { LOGIN, ROUTER_PATH } from "@/tools/constants";
 
 export default function LoginPage() {
 
@@ -14,7 +15,8 @@ export default function LoginPage() {
             </h2>
           </div>
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" action={ROUTER_PATH.API.USER} method="POST">
+              <input type="hidden" name="action" value={LOGIN}/>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Dirección email
