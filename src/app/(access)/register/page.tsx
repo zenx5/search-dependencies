@@ -1,22 +1,30 @@
 import Link from "next/link";
 import ButtonGithub from "@/components/ButtonGithub";
 import KavavSvg from "@/components/KavavSvg";
+import { getError } from "@/tools/actions";
+import { getUser } from "@/tools/actions/user";
+import { REGISTER, ROUTER_PATH } from "@/tools/constants";
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const error = getError()
+  const user = getUser()
+
   return (
 
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 pt-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <KavavSvg />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Registrarse
           </h2>
+          <small className="italic text-center text-red-600 w-full block">{ error }</small>
         </div>
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-4" action="#" method="POST">
+        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form className="space-y-4" action={ROUTER_PATH.API.USER} method="POST">
+            <input type="hidden" name="action" value={REGISTER}/>
             <div>
               <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                Nombre
+                Username
               </label>
               <div className="mt-2">
                 <input
@@ -28,17 +36,31 @@ export default function RegisterPage() {
                 />
               </div>
             </div>
+            <div>
+              <label htmlFor="firstname" className="block text-sm font-medium leading-6 text-gray-900">
+                Nombre
+              </label>
+              <div className="mt-2">
+                <input
+                  id="firstname"
+                  name="firstname"
+                  type="text"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 pl-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="apellido" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="lastname" className="block text-sm font-medium leading-6 text-gray-900">
                   Apellido
                 </label>
               </div>
               <div className="mt-2">
                 <input
-                  id="apellido"
-                  name="apellido"
+                  id="lastname"
+                  name="lastname"
                   type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 pl-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
@@ -58,6 +80,7 @@ export default function RegisterPage() {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  defaultValue={ user ? user.email : "" }
                   required
                   className="block w-full rounded-md border-0 py-1.5 pl-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 />
@@ -84,14 +107,14 @@ export default function RegisterPage() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="passwordConfirmation" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="password-confirmation" className="block text-sm font-medium leading-6 text-gray-900">
                   Confirmar Contraseña
                 </label>
               </div>
               <div className="mt-2">
                 <input
-                  id="passwordConfirmation"
-                  name="passwordConfirmation"
+                  id="password-confirmation"
+                  name="password-confirmation"
                   type="password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 pl-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
