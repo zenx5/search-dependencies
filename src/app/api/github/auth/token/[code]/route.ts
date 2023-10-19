@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
-import { cookies } from "next/headers"
+import { setUser } from "@/tools/actions"
 
 const prisma = new PrismaClient()
 
@@ -68,7 +68,8 @@ export async function GET(request:NextRequest, { params }:{ params: { code:strin
             updateLimit: (new Date()).toISOString()
           }
         })
-        await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( user ) )
+        // await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( user ) )
+        // setUser( user )
         return NextResponse.json({
           error: false,
           message: "Success: User Created",
@@ -84,8 +85,9 @@ export async function GET(request:NextRequest, { params }:{ params: { code:strin
       }
     }
     // logear usuario
-    console.log(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
-    await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
+    // console.log(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
+    // await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
+    // setUser(data)
     return NextResponse.json({
       error: false,
       message: "Success: User Logged",
