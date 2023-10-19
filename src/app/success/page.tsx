@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { actionUser } from "@/tools/actions/user";
-import { redirect } from "next/navigation";
-import { setUser } from "@/tools/actions";
+import { actionUser, setUser } from "@/tools/actions/user";
+import { ROUTER_PATH } from "@/tools/constants";
 
 
 
@@ -10,15 +9,6 @@ export default async function Page({ searchParams }:{ searchParams:{ code:string
 
     const response = await fetch(process.env.LOCALHOST + `/api/github/auth/token/${code}`)
     const { error, message, data } = await response.json()
-    // DESCOMENTAR PARA PRUEBAS
-    // const message = "hola"
-    // const error = false
-    // const data = {
-    //     avatarUrl: "https://avatars.githubusercontent.com/u/26119733?v=4",
-    //     firstname: "Octavio",
-    //     username: "zenx5",
-    //     email:"omartinez1618@gmail.com"
-    // }
 
     if( !error ) {
         return <div className="w-screen h-screen flex items-center justify-center flex-col">
@@ -34,7 +24,7 @@ export default async function Page({ searchParams }:{ searchParams:{ code:string
                     </span>
                 </div>
                 <form action={actionUser} className="flex flex-row gap-10">
-                    <input type="hidden" name="user" value={JSON.stringify(data)} />
+                    <input type="hidden" name="user_id" value={data.id} />
                     <input type="submit" name="response_is" value="No" className="rounded cursor-pointer hover:shadow-lg hover:shadow-red-400 bg-red-600 text-white px-10 py-2"/>
                     <input type="submit" name="response_is" value="Si" className="rounded cursor-pointer hover:shadow-lg hover:shadow-green-400 bg-green-600 text-white px-10 py-2"/>
                 </form>
