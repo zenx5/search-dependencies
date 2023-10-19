@@ -85,9 +85,6 @@ export async function GET(request:NextRequest, { params }:{ params: { code:strin
       }
     }
     // logear usuario
-    // console.log(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
-    // await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
-    // setUser(data)
     return NextResponse.json({
       error: false,
       message: "Success: User Logged",
