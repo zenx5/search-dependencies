@@ -1,23 +1,16 @@
 import { removeUser, setError, setUser } from "@/tools/actions";
 import { LOGIN, LOGOUT, REGISTER, ROUTER_PATH } from "@/tools/constants";
-import { User } from "@/tools/models";
-import { PrismaClient } from "@prisma/client";
+import User from "@/tools/models/User";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient()
 
 export async function POST( request:NextRequest) {
     const form = await request.formData()
     if( form.get('action')===LOGIN ) {
         const email = form.get('email') as string
         const password = form.get('password') as string
-        const user = await prisma.user.findUnique({
-            where:{
-                email:email
-            }
-        })
-        prisma.$disconnect()
-        if( user ) {
+        const userArray:any = await User.search("email", email)
+        if( userArray.length>0 ) {
+            const user = userArray[0]
             if( user?.password===password ) {
                 // Login correcto
                 setUser( {
@@ -64,28 +57,22 @@ export async function POST( request:NextRequest) {
         // updatedAt     DateTime  @updatedAt
         try{
             if( password!==password_confirmed ) throw new Error("Password no coincide")
-            const user = await prisma.user.findUnique({
-                where:{
-                    email:email
-                }
-            })
-            if( user ) throw new Error("Ya existe un usuario con este email " + email)
+            const user = await User.search("email", email )
+            if( user.length === 0 ) throw new Error("Ya existe un usuario con este email " + email)
             const updateLimit = new Date( Date.now() + 1000*60*60*24*30 )
-            const newuser = await prisma.user.create({
-                data:{
-                    id: 0,
-                    email,
-                    username,
-                    firstname,
-                    lastname,
-                    avatarUrl: "",
-                    password,
-                    githubuser: "",
-                    requestLimit: 10,
-                    updateLimit
-                }
-            })
-            prisma.$disconnect()
+            const data = {
+                id: 0,
+                email,
+                username,
+                firstname,
+                lastname,
+                avatarUrl: "",
+                password,
+                githubuser: "",
+                requestLimit: 10,
+                updateLimit
+            }
+            User.post(data)
             const url = new URL(ROUTER_PATH.APP, request.url)
             return NextResponse.redirect( url, { status:303 })
         } catch( error:any ) {
@@ -93,7 +80,6 @@ export async function POST( request:NextRequest) {
             const url = new URL(ROUTER_PATH.REGISTER, request.url)
             return NextResponse.redirect( url, { status:303 })
         }
-
     } else if( form.get('action')===LOGOUT ) {
         removeUser()
         const url = new URL(ROUTER_PATH.LOGIN, request.url)

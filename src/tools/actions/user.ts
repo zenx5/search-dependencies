@@ -2,7 +2,7 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation";
 import { ROUTER_PATH } from "../constants";
-import { User } from "../models/User";
+import User from "../models/User";
 
 
 
