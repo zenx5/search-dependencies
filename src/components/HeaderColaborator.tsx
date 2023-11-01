@@ -6,10 +6,11 @@ export default async function HeaderColaborator({ user }:{ user:any }) {
 
     const response = await fetch("https://api.github.com/repos/zenx5/search-dependencies/contributors")
     const colaborators = await response.json()
+    typeof colaborators
 
     return <span className="p-5 m-5 w-11/12 flex flex-row justify-between items-center">
         <span className="flex flex-row justify-around items-center w-full">
-            { colaborators.map( (colaborator:any) => <Link key={colaborator.node_id} href={colaborator.html_url} target="_blank" className="flex flex-col items-center group">
+            {  colaborators instanceof Array && colaborators.map( (colaborator:any) => <Link key={colaborator.node_id} href={colaborator.html_url} target="_blank" className="flex flex-col items-center group">
                 { colaborator.avatar_url ?
                     <Image className="w-12 h-12 rounded-full" src={colaborator.avatar_url} width={100} height={100} alt=""/>:
                     <UserIcon className="w-10 h-10"/>}
@@ -18,15 +19,16 @@ export default async function HeaderColaborator({ user }:{ user:any }) {
         </span>
         <form method="POST" action={ROUTER_PATH.API.USER} className="border-l-2 border-white ">
             <input type="hidden" name="action" value={LOGOUT} />
-            <button type="submit" className="flex flex-col items-center group justify-center mx-5">
+            <span className="flex flex-col items-center group justify-center mx-5 p-2 h-20 top-7 relative">
                 {
                     user.avatarUrl ?
                     <Image className="w-12 h-12 rounded-full" src={user.avatarUrl} width={100} height={100} alt=""/>:
                     <UserIcon className="w-10"/>
                 }
                 <span className="group-hover:font-semibold">{user.username}</span>
-                <small className="text-transparent group-hover:text-red-500 italic text-xs">logout</small>
-            </button>
+                <Link href="/dashboard" className="relative top-1 text-xs text-transparent group-hover:text-green-800 border border-transparent hover:border-green-800 py-1 px-2 rounded-full">Dashboard</Link>
+                <button type="submit" className="relative top-1 text-transparent group-hover:text-red-500 italic text-xs border border-transparent hover:border-red-500 py-1 px-2 rounded-full">logout</button>
+            </span>
         </form>
     </span>
 }

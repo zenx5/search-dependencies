@@ -16,8 +16,16 @@ export async function GET(request:NextRequest, { params }: { params:{ username:s
     const user = await prisma.user.findUnique({
         where
     })
-    return NextResponse.json({
+
+    const response = JSON.stringify({
         error: user===null,
         data: user
+    })
+
+    return new NextResponse( response,{
+        status:200,
+        headers:{
+            'Access-Control-Allow-Origin': 'chrome-extension'
+        }
     })
 }
