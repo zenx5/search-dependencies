@@ -1,7 +1,7 @@
-import { actionDelete, actionGet, actionGetAll, actionSave } from "./firebase/action";
+import { actionDelete, actionGet, actionGetAll, actionSave, actionSearch } from "../firebase/action";
 
-export class User {
-    static  tableName = 'users'
+export class BaseModel {
+    static  tableName = ""
 
     static async get( id:string|null=null ) {
         if( id ) return await actionGet(this.tableName, id)
@@ -18,5 +18,9 @@ export class User {
 
     static async put(id:string, data:any ) {
         return await actionSave(this.tableName, data, id)
+    }
+
+    static async search(key:string, value:string) {
+        return await actionSearch(this.tableName, key, "==", value)
     }
 }
