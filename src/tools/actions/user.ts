@@ -2,7 +2,7 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation";
 import { ROUTER_PATH } from "../constants";
-import { PrismaClient } from "@prisma/client";
+import User from "../models/User";
 
 
 
@@ -29,13 +29,8 @@ export const removeUser = () => {
 export const actionUser = async (form:FormData) => {
     const response = form.get("response_is")
     if( response==="Si" ) {
-        const prisma = new PrismaClient()
-        const user = await prisma.user.findUnique({
-            where:{
-                id: parseInt( form.get("user_id") as string )
-            }
-        })
-        if( !!user ) {
+        const user = await User.get(form.get("user_id") as string)
+        if( user ) {
             setUser({
                 ...user,
                 password: undefined
@@ -43,8 +38,6 @@ export const actionUser = async (form:FormData) => {
             return redirect(ROUTER_PATH.APP)
         }
     }
-    // cookies().delete(process.env.COOKIE_NAME_USER as string)
     removeUser()
     return redirect(ROUTER_PATH.LOGIN)
-    // return redirect(ROUTER_PATH.APP)
 }
