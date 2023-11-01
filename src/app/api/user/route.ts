@@ -1,5 +1,6 @@
 import { removeUser, setError, setUser } from "@/tools/actions";
 import { LOGIN, LOGOUT, REGISTER, ROUTER_PATH } from "@/tools/constants";
+import { User } from "@/tools/models";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -104,6 +105,6 @@ export async function POST( request:NextRequest) {
 }
 
 export async function GET() : Promise<any> {
-    const user = await prisma.user.findMany()
+    const user = await User.get()
     return NextResponse.json(user)
 }
