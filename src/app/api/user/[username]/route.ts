@@ -1,25 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient()
+import User from "@/tools/models/User";
 
 export async function GET(request:NextRequest, { params }: { params:{ username:string } }) {
     const { username } = params
     const github = !!request.nextUrl.searchParams.get('github')?.replace('','1')
 
-    const where = github ? {
-        githubuser: username
-    }:{
-        username: username
-    }
-
-    const user = await prisma.user.findUnique({
-        where
-    })
+    const user = await User.search(
+        github ? "githubuser" : "username",
+        username
+    )
 
     const response = JSON.stringify({
-        error: user===null,
-        data: user
+        error: user.length===0,
+        data: user.length ? user[0] : null
     })
 
     return new NextResponse( response,{

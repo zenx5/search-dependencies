@@ -1,19 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client"
+import Extensions from "@/tools/models/Estensions";
 
-const prisma = new PrismaClient()
 
 export async function POST(request:NextRequest) {
     const body = await request.json()
     try{
-        const extension = await prisma.extensions.create({
-            data:{
-                navigator: body.navigator,
-                code: body.code
-            }
-        })
-        prisma.$disconnect();
-
+        const data = {
+            navigator: body.navigator,
+            code: body.code
+        }
+        const extension = await Extensions.post(data)
         return new NextResponse( JSON.stringify(extension) ,{
             status:200,
             headers:{

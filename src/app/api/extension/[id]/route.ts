@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client"
+import Extensions from "@/tools/models/Estensions";
 
-const prisma = new PrismaClient()
 
 export async function GET(request:NextRequest, { params }:{ params:{ id:string } } ) {
     let message = ""
@@ -9,11 +8,7 @@ export async function GET(request:NextRequest, { params }:{ params:{ id:string }
     const user = request.nextUrl.searchParams.get('user')
     const query = request.nextUrl.searchParams.get('query')
     if( user && query ) {
-        const extension = await prisma.extensions.findMany({
-            where: {
-                code: id
-            }
-        })
+        const extension = await Extensions.search("code", id)
         if( extension && extension.length>0 ) {
             const response = await fetch(`${process.env.LOCALHOST}/api/search`, {
                 method: 'post',
