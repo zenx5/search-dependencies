@@ -1,8 +1,5 @@
-import { PrismaClient } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
-import { cookies } from "next/headers"
-
-const prisma = new PrismaClient()
+import User from "@/tools/models/User"
 
 export async function GET(request:NextRequest, { params }:{ params: { code:string }} ){
     const { code } = params
@@ -55,20 +52,18 @@ export async function GET(request:NextRequest, { params }:{ params: { code:strin
     if( notIsUser ) {
       // crear usuario
       try{
-        const user = await prisma.user.create({
-          data:{
-            email: email,
-            username: login,
-            firstname: name.split(" ")?.at(0),
-            lastname: name.split(" ")?.at(1) ?? "",
-            avatarUrl: avatar_url,
-            password: "",
-            githubuser: login,
-            requestLimit: 10,
-            updateLimit: (new Date()).toISOString()
-          }
-        })
-        await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( user ) )
+        const data = {
+          email: email,
+          username: login,
+          firstname: name.split(" ")?.at(0),
+          lastname: name.split(" ")?.at(1) ?? "",
+          avatarUrl: avatar_url,
+          password: "",
+          githubuser: login,
+          requestLimit: 10,
+          updateLimit: (new Date()).toISOString()
+        }
+        const user = User.post(data)
         return NextResponse.json({
           error: false,
           message: "Success: User Created",
@@ -84,8 +79,6 @@ export async function GET(request:NextRequest, { params }:{ params: { code:strin
       }
     }
     // logear usuario
-    console.log(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
-    await cookies().set(process.env.COOKIE_NAME_USER as string, JSON.stringify( data ) )
     return NextResponse.json({
       error: false,
       message: "Success: User Logged",

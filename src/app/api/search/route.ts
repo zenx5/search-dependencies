@@ -13,9 +13,9 @@ export async function POST(request:NextRequest) {
 
     const response = await fetch(`${process.env.LOCALHOST}/api/github/repos/${user}`)
     const data = await response.json()
-    const packages = data.map( ({name, default_branch, html_url}:responseRepositorie) => ({
-        package: `https://raw.githubusercontent.com/${user}/${name}/${default_branch}/package.json`,
-        html_url
+    const packages = data.map( (item:responseRepositorie) => ({
+        package: `https://raw.githubusercontent.com/${user}/${item.name}/${item.default_branch}/package.json`,
+        ...item
     }) )
     const result = []
     for( let index = 0; index<packages.length; index++ ) {
@@ -34,6 +34,7 @@ export async function POST(request:NextRequest) {
             const indexDependencie = keyDependencies.indexOf(dep)
             if( indexDependencie!==NOT_FOUND ){
                 result.push({
+                    ...packages[ index ],
                     url: packages[ index ].html_url,
                     version: valueDependencies[ indexDependencie ]
                 })
