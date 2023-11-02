@@ -4,6 +4,7 @@ import ButtonLoad from "./ButtonLoad"
 import { getUser } from "@/tools/actions"
 import HeaderColaborator from "@/components/HeaderColaborator"
 import { ROUTER_PATH } from "@/tools/constants"
+import Link from "next/link"
 
 interface ErrorMessage{
   message:string
@@ -46,7 +47,9 @@ export default function Form({
 
     return (
     <main className="flex min-h-screen flex-col items-center justify-between border-2 border-blue-500 gap-10 md:px-24 md:pb-24 px-5 bg-gray-400">
-      <HeaderColaborator user={currentUser} />
+      <HeaderColaborator user={currentUser}>
+        <Link href="/dashboard" className="top-7 relative w-full group-hover:text-green-800 group-hover:border-green-800 text-xs text-transparent border border-transparent py-1 px-2 rounded-full">Dashboard</Link>
+      </HeaderColaborator>
       <form className="mt-20 container flex md:flex-row flex-col gap-5 md:gap-0 justify-center" action={search}>
         <span className="w-full md:w-4/12 lg:w-64 h-fit group">
           <input type="text" className="md:border-r text-center md:text-left py-2 px-4 m-0 w-full h-full rounded-xl md:rounded-l-xl md:rounded-r-none shadow-lg outline-none focus:bg-green-100 focus:font-semibold" placeholder="Usuario" name="user" defaultValue={user ?? ""}/>
