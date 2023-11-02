@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Extensions from "@/tools/models/Estensions";
+import Extensions from "@/tools/models/Extension";
 
 
 export async function GET(request:NextRequest, { params }:{ params:{ id:string } } ) {
