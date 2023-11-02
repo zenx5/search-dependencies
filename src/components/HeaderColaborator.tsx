@@ -9,17 +9,17 @@ export default async function HeaderColaborator({ children, user }:{ children:an
 
     return <span className="px-5 py-2 mx5 my-2 w-11/12 flex flex-row justify-between items-center">
         <span className="w-full">
-            <h2 className="text-center mb-1 uppercase font-medium">Colaboradores</h2>
-            <span className="flex flex-row justify-around items-center w-full">
-                {  colaborators instanceof Array && colaborators.map( (colaborator:any) => <Link key={colaborator.node_id} href={colaborator.html_url} target="_blank" className="flex flex-col items-center group">
+            <h2 className="text-left md:text-center mb-1 uppercase font-medium">Colaboradores</h2>
+            <span className="flex md:flex-row flex-col justify-around items-start md:items-center italic md:w-full w-fit">
+                {  colaborators instanceof Array && colaborators.map( (colaborator:any) => <Link key={colaborator.node_id} href={colaborator.html_url} target="_blank" className="flex flex-col items-start md:items-center group">
                     { colaborator.avatar_url ?
-                        <Image className="w-12 h-12 rounded-full" src={colaborator.avatar_url} width={80} height={80} alt=""/>:
-                        <UserIcon className="w-10 h-10"/>}
+                        <Image className="w-12 h-12 rounded-full md:block hidden" src={colaborator.avatar_url} width={80} height={80} alt=""/>:
+                        <UserIcon className="w-10 h-10 md:block hidden"/>}
                     <span className="group-hover:font-semibold">{colaborator.login}</span>
                 </Link>)}
             </span>
         </span>
-        <form method="POST" action={ROUTER_PATH.API.USER} className="border-l-2 border-white flex flex-col group gap-1 px-1 mt-8">
+        <form method="POST" action={ROUTER_PATH.API.USER} className="border-l-2 md:border-white border-transparent flex flex-col group gap-1 px-1 mt-8">
             <input type="hidden" name="action" value={LOGOUT} />
             <span className="flex flex-col items-center justify-center p-2 h-20 top-7 relative w-full">
                 {
