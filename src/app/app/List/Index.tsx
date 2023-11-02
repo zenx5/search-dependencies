@@ -2,7 +2,7 @@ import ItemListRepo from "./Item";
 import Loading from "../loading";
 
 
-export default function ListRepo({ items }:{ items:Array<ItemsRepo>}) {
+export default function ListRepo({ items }:{ items:Array<ItemsRepoType>}) {
 
 
     return <span className="flex flex-col">
