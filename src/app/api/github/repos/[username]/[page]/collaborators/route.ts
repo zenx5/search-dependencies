@@ -14,5 +14,10 @@ export async function GET( request:NextRequest, { params }:{ params:{ username:s
         headers
     })
     const data = await response.json()
-    return NextResponse.json( data )
+    return new NextResponse( JSON.stringify(data) ,{
+        status:200,
+        headers:{
+            'Access-Control-Allow-Origin': '*'
+        }
+    })
 }
